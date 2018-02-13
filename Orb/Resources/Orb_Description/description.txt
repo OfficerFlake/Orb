@@ -1,0 +1,209 @@
+Hi, I'm officerflake and welcome to the description video on Orb for YSFlight development.
+
+===
+
+In this video I'm going to cover a few topics. I'll be talking about ysflight as it currently is, how it works, and what we can do with it.
+
+then I'll start talking about orb itself. what it is, what it does, how it works, and WHY have it to begin with.
+
+I'll be discussing each stage of the orb development from there, and then how you can help me in finishing the project.
+
+===
+
+So ysflight works by having a server, as represented here in red, and a client, represented in blue.
+
+===
+
+They both communicate with each other over the internet, by sending data back and forth.
+
+===
+
+What you see is just a client conencting to a server, and not much else.
+
+Behind the scenes, lots of data packets go back an forth. A packet, is like a letter, if you will imagine it, of information.
+
+A ysflight data packet has 3 distinct parts: the size of the packet, the type of packet, and then it's data.
+
+Many other programs and protocals work the same way.
+
+For example, HTTP, the protocal used on the internet, has a size, a header, and data, just like ysflight does. The header just has more info, like who sent this packet, and where it's going.
+
+As you can see here, ysflight tells the client or server how much data is coming, what type of data it is (is it a login packet, or flight data, a map name, etc.) and then WHAT that data actually is.)
+
+This, is what makes YSFlight tick underneath, when you are flying on a server, you are sending packet after packet of flight data, for everyone else to see.
+
+YSFlight communicates with TCP/IP, or (TCP/IP). This is very good for ensuring that the data gets from one computer to the other on the internet without any errors, in the correct order.
+
+A problem with this, is that sometimes a packet gets lost in the internet, and doesn't reach it's destination. it gets destroyed and the computer that sent it, tries again.
+
+Because TCP/IP has to work in ORDER, all other packets are delayed too, this can be up to 5 or so seconds, maybe more, depending on how bad the connection is.
+
+UDP protocal, sends data without confirming if it arrives. this is not very good for things like file transfers, as if something goes wrong, the file is corrupted.
+
+But for things like video games, where data integrity is not important, but speed is, this is a very good thing.
+
+A program can get a bugged packet, work out it's dodgy and just drop it, and wait for the next one, rather then waiting for the right packet over and over.
+
+unfortunately, YSFlight only utilises the TCP/IP protocal, when in actuality, its netcode allows for udp ALL the time, as it always performs redundant checks on the data to make sure both sides of the program, the server and client, are still getting the right messages.
+
+unfortunately, there is no way around this, and ysflight (and thus orb) will be limited by this function forever, (at least until very VERY late in development where, IF i do, I'll make an orb CLIENT to speed things up.)
+
+===
+
+Currently, YSFlight allows you to join a server with any name, join and leave flights, talk to all users at once, kill aircraft and ground objects, and from a server perspective, ban ip addresses.
+
+These functions allow you to play, yes, but it's not as strong as it could be.
+
+consider this, what if you wanted your server to allow only specific players. Say you only wanted people from your YSFlight Clan or Squadron or airline to join. Well, you could moderate the server all the time, but that would suck wouldn't it?
+
+why not authenticate the users some how?
+
+or hows about you want to deny bad users from joining flight, but they are allowed to watch other people fly.
+
+what if you want to stop certain players from talking, or if you want to talk to only ONE user privately.
+
+what if you want to stop aircrafts from destorying specific aircraft types or ground objects? what if you want to ban certain players by name? what if you just want to kick them from the server?
+
+Sure, the server admin, the guy with the console already, can do some of this, but what about other people? what about giving this power to say, trusted people from your squad? you could set up your computer to be a remote host, but that's still a wasted effort.
+
+THIS is why I'm coding Orb for ysflight.
+
+===
+
+What is orb?
+
+Orb, is a ysflight extension, that allows for some more advanced functions.
+
+I often find that people do not open their minds to the possibiliteis with Orb, so i've made a development checklist to encourage some ideas.
+
+Before I go into that, let me just cover a scenario:
+
+You run a military squadron for ysf. you want a server where your squadron commanders can control the server, you want to ban rival squads from your server, and you want to allow everyone else in to play normally.
+
+you can run an orb server, where you define your own groups and permissions, and allow things for your group, but deny things for the other groups.
+
+Done.
+
+What say we take this much further.
+
+What if I wanted to create a war game between two squads, where pilots who kill other pilots earn points, kileld pilots lose points. the first squad to be wiped out completely loses the war, further to that, you can build bases and buy more aircraft with money. the more money you have, the better off you are. to make money, you need skilled pilots. to survive and win, you need a good team!
+
+What about airlines? You fly a flight, and depending on the distance and time taken, you make or lose money. if you crash, you lose a LOT of money, it's all dependable on what YOU decide should happen.
+
+So what can orb do? It can do anything. It can add power and challenge to ysflight never before possible. All you need is an open mind, and the ability to modify and act on what is already there.
+
+All the potential is here already, I know it is, I've looked already. It's just a matter of building solutions for it.
+
+===
+
+orb 1.0 will work as a proxy service. it will be pretty dumb and won't be able to respond to clients or servers. it will just listen and modify, and resend.
+
+The result will still be plenty powerful. Users can be banned, kicked, muted, denied access to the server.
+
+It works by intercepting data from the client, processing it, then passing it to the server.
+
+The obvious drawback here is that it has to think twice about the data, once in orb, the next time in ysflight server/client itself.
+
+===
+
+mutliple clients connect through the internet to ONE orb, which in turn is connected to ONE server.
+
+Think of it like this: every ysflight client is a telephone from a random household, and ysflight itself is the phonenumber they want to reach.
+
+the internet is the exchange, which connects clients and servers together.
+
+BUT, the wire, from the client socket to the server socket is passed through a filter first.
+
+So you have client, internet, ORB, the filetr, ysflight server.
+
+Many clients, many connections. ONE orb, ONE server. Orb edits data on the internet data level, not on computer memory level, so yes, it is VERY possible to have an orb proxy on one side of the world and it's server on the other (this would be dumb though, but it can be done).
+
+===
+
+Orb 1.0 will have these functions:
+
+it'll log data, things like system events in the server, like user changes rank or is added to a group, etc.
+
+it'll log bugs, which can be sent to me to be fixed.
+
+it'll also log chat messages, this way you can go back and find what was said a long time ago...
+
+It'll have a user database. clients will connect and log in as a user, they information is saved and updated based on what they do. they can be members of groups and any rank in that group. the user can have permissions, the groups they are part of can have permissions, the rank they are in those groups can have permissions. This allows for a very robust and very detailed way of choosing HOW the server will work by the server ownwers. You could, for example, deny a user from joining flights, even though their rank and group can, just by editing the users permissions, or you could deny all users from flying unless they are a specific rank in a specific group. the possibilities are endless.
+
+orb will run as a proxy service as stated before, so it'll need a ysflight server to run with.
+
+and, with the permissinos, you can ban users by name, kick users, mute users, and join block users.
+
+===
+
+orb 2.0 going a bit further.
+
+remember how orb 1.0 needs a ysflight server to work? thus it needs to do TWICE the work? FORGET THAT. orb will be able to work by itself now.
+
+this stage of development will use a more scientific approach:
+
+one way will be listen and identify, work out what the server/client is saying and what it's data means, and the other will be spit out specific data, and observe from a client, what happens.
+
+from here, we'll finally get orb working by itself, without a server needed. no more complex wiring, just start orb, get ysflight clients to conenct. good to go!
+
+features will be more advanced too.
+
+flights will be logged to a website such as ysflight headquarters, this will allow users to display their stats in signatures on forums and on other webpages.
+
+weather will be very different. weather can change over time, smoothly, fog can creep in, wind can get worse, change direction, turbulence can exist.
+
+server options will also be switchable. with a press of a button in the server gui, missiles will be enabled or disabled, wind will be on or off, it'll be day or night, the server will be locked or not. etc. etc.
+
+A GUI will handle database creation, making it easier to set up your own server, rather then having to edit your database by hand.
+
+===
+
+orb 3.0 will work by itself, just like 2.0.
+
+there will be many game modes here that will blow ysflight into the stratosphere. power and options will effectively quadruple at least.
+
+militarys will have a lot more fun, as combat now has a value. kills do you good, earn you points you get acheivements for them, deaths... not so much.
+
+airlines will earn funds and will finally have something to show for their efforts.
+
+aerobatics pilots will get a lot more options in regards to airshows. they'll be able to play replays on the go, no server restarts necessary.
+
+virtual air traffic control will help pilots navigate.
+
+virtual money will exist, adding some more challange to airline and militarys, should they choose to enable it.
+
+career mode will also be an option, where you start with some money, and you earn licences and get jobs with airlines or militarys run by the community, and you are able to buy your own aircraft.
+
+militarys and va's will also enjoy commander mode, an option that allows you to build airports and cities and whatever you could want with ground objects on servers.
+
+So, what more could be done for this game after 3.0?
+
+===
+
+WHO KNOWS?
+
+I'm thinking I might code an orb client. This will mean you just connect to your orb client on 127.0.0.1 on your own pc, and the client connects you to servers. orb client will be able to do a lot more, like play video effects and sounds on your system, use UDP mode by speaking a new server language unique to it and orb server to make YSFlight over the internet even faster, as opposed to the tcp/ip limitations i discussed earlier.
+
+the skys the limit, and maybe a bit more.
+
+===
+
+you can help this project in a few ways:
+
+send a thank you email to soji yamakawa, the author of ysflight. He's providing me some information on ysflight netcode that is making this process a lot easier and quicker.
+
+you can offer ideas you want to see developed. if I have time and think it's a good idea, i'll implement it. offer your ideas in the orb development thread, as linked in the description of this video, down there. somewhere.
+
+you can send me bug reports. I'll probably code a feature to auto send them later, but if you can provide them and accurately recreate them every time, i'll have more then enough information to fix the problem within 24 hours I'm certain.
+
+you can always send me a thank you message too and keep me focused on the project!
+
+if you have coding experience, you can look at the source code, and add to it and supply me with your changes. I could add the changes to the program, and I'll add you to the official developers list credits.
+
+a simple way of promoting orb is to USE IT. paly on servers which use orb. encourage orb to be used on servers this way. it may be a bit jumpy at first, but once it starts getting used, things will get even better.
+
+Remember to play online often, with orb or not. Keep the YSFLight community alive!
+
+Thanks so much for watching this video and dedicating some time to the orb project. I look forward to finishing the project and making YSFlight better for you all.
+
+See you all online guys, cheers!

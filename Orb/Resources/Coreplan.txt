@@ -1,0 +1,71 @@
+userobject.Groups = "Name", "Name", "Name" -< List Format for easy add/remove item.
+userobject.Group[name]
+
+User[Name] = userobject.
+User = dictionary.
+Userobject.Group[Name] = groupobject
+group = dictionary within user.
+
+Group[name] = hostgroupobject
+
+hostgroupobject vars:
+Name of group
+Full Name Of Group
+Group Members *
+Ranks *
+Change group name() lock adding/removing members, all members search and replace, allow addremove
+FoundedDate.
+Permissions ARRAY.
+
+Permissions still uses int based system. Add/Subtract OR True|False. Any True or False override, with False taking Power away (NO OVERRIDE).
+>1 = has power
+<=0 = no power.
+
+User = Dictionary.
+UserInfo = Class.
+Group = Dictionary
+GroupInfo = Class.
+
+UserInfo.Group = Dictionary
+GroupInfo.Members = List.
+UserInfo.Group = Class.
+
+User[Bobb].Group[Bobb].Rank
+UserObject.GroupObject.Rank
+
+Permissions = Permissions enabled or not on server.
+
+Group.Permissions = Permissions enabled or not for group.
+User.Permissions = User.Permissions.
+
+User.Get(Name) {
+for each item in userlist {
+if name in item, target += item.
+}
+
+handle multiples... etc.
+
+Core.Users.GetOne(Blah)
+
+Core.User.Groups.GetOne(Blah)
+Core.User.Group.Rank
+
+Core.Users > [Static Class] List, UserMethods
+Core.User > [Class] Groups, Group, ServerRank:Class, Vars, Methods.
+Core.User.ServerRank > [Class] Value, By, Date, Reason, Previous.
+Core.User.Groups > [Static Class] List, GroupMethods.
+Core.User.Group > [Class] Rank:Int, JoinedDate, PreviousRank, CurrentRank, RankReason, RankedBy...
+Core.Groups > [Static Class] List, GroupMethods
+Core.Group > [Class] Ranks:Class, FoundedDate, Founder, Permissions:Class, Name, Fullname.
+Core.Group.Permissions > [Static Class] List, Methods
+Core.Group.Permission > [Class] Name, Value
+Core.Group.Ranks [Static Class] List, Methods.
+Core.Group.Rank > [Class] Permissions:Class, Name, Fullname.
+Core.Group.Rank.Permissions > [Static Class] List, Methods.
+Core.Group.Rank.Permission > [Class] Name, Value.
+Core.Permissions > [Static Class] List, Methods
+Core.Permission > [Class] Name, Value.
+Core.ServerRanks > [Static Class] List, Methods.
+Core.ServerRank > [Class] Permissions:Class, Name, Fullname
+Core.ServerRank.Permissions > [Static Class] List, Methods.
+Core.ServerRank.Permission > [Class] Name, Value.

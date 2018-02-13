@@ -1,0 +1,9 @@
+User.Load(stringvar) get or null.
+User.LoadAll() get all from file.
+User.Save(stringvar) read file, save one, overwrite as needed.
+User.SaveAll() save all data, overwrite file.
+
+UserDB.Load(Username) finds a user and loadsall for that user.
+UserDB.LoadAll() loads all users.
+UserDB.Save(Username) find user and savesall for that user.
+UserDB.SaveAll() saves all users.

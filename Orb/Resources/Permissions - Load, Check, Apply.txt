@@ -1,0 +1,67 @@
+int power +, -, 0.
+string override: null, true, false.
+
+REM	ORB.ALLOW	GROUP.RANK:YSRAAF, ACM|TRUE
+REM	ORB.ALLOW	*|-1
+
+if line = orb.allow then allowablelist.add line
+
+foreach(string in ALLOW list)
+	checkpermission(string)
+	Group.Rank:BLAH, ACM|x
+	Group:BLAH|x
+	User:BLAH|x
+	Rank:BLAH|x
+
+checkbasepermission(group, permission)
+	get groups permission and return string of int or bool
+checkbasepermission(user, permission)
+	get users base permission and return strIB
+checkbasepermission(rank, permission)
+	get rank permission and return setIB
+
+checkpermission(string)
+	if string.begins(group.rank) do group.rank stuff {
+		if get group not null {
+			if thisuser in group {
+				if thisuser is group.rank or group.rank is * {
+					applypermission(x)
+		else if group is * {
+			foreach group user is in {
+				if rank is * {
+					applypermission(x)
+				else if rank is rank{
+					applypermission(x)
+	if string.begins(group) do group stuff.
+		if get group not null {
+			if this user in group {
+				applypermission(x)
+		if group is * {
+			applypermission(x)
+				
+
+	if string begins(user) do user stuff {
+		if get user not null {
+			if this user is user {
+				applypermission(x)
+		if user is * {
+			applypermission(x)
+
+	if string begins(rank) do rank stuff {
+		if get rank not null {
+			if this user is rank {
+				applypermission(x)
+		if rank is * {
+			applypermission(x)
+
+applypermission(x) {
+	bool tempbool;
+	if(x == "false") {
+		override = false
+	if(x == "true") {
+		if override != "false" then override "true".
+		return;
+	int tempint
+	if(int.tryparse(x)) {
+		power += x.
+		return;

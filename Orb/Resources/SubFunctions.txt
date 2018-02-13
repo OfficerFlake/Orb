@@ -1,0 +1,23 @@
+User:
+	New x
+	Delete x
+	Load x
+	Save x
+
+Group:
+	New x
+	Delete x
+	Load x
+	Save x
+
+Rank:
+	New x
+	Delete x
+	Load x
+	Save x
+
+Permission:
+	New
+	Delete
+	Load
+	Save

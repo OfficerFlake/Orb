@@ -1,0 +1,201 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
+Network Packet Specification
+
+Update: 2013/02/13
+
+
+Command enum
+enum
+{
+	FSNETCMD_NULL,                   //   0
+	FSNETCMD_LOGON,                  //   1
+	FSNETCMD_LOGOFF,                 //   2
+	FSNETCMD_ERROR,                  //   3
+	FSNETCMD_LOADFIELD,              //   4 Svr ->Cli,   Cli->Svr for read back
+	FSNETCMD_ADDOBJECT,              //   5 Svr ->Cli
+	FSNETCMD_READBACK,               //   6 Svr<->Cli
+	FSNETCMD_SMOKECOLOR,             //   7 Svr<->Cli
+	FSNETCMD_JOINREQUEST,            //   8 Svr<- Cli
+	FSNETCMD_JOINAPPROVAL,           //   9 Svr ->Cli
+	FSNETCMD_REJECTJOINREQ,          //  10
+	FSNETCMD_AIRPLANESTATE,          //  11 Svr<->Cli   // Be careful in FsDeleteOldStatePacket when modify
+	FSNETCMD_UNJOIN,                 //  12 Svr<- Cli
+	FSNETCMD_REMOVEAIRPLANE,         //  13 Svr<->Cli
+	FSNETCMD_REQUESTTESTAIRPLANE,    //  14
+	FSNETCMD_KILLSERVER,             //  15 Svr<- Cli
+	FSNETCMD_PREPARESIMULATION,      //  16 Svr ->Cli
+	FSNETCMD_TESTPACKET,             //  17
+	FSNETCMD_LOCKON,                 //  18 Svr<->Cli
+	FSNETCMD_REMOVEGROUND,           //  19 Svr<->Cli
+	FSNETCMD_MISSILELAUNCH,          //  20 Svr<->Cli   // fsweapon.cpp is responsible for encoding/decoding
+	FSNETCMD_GROUNDSTATE,            //  21 Svr<->Cli   // Be careful in FsDeleteOldStatePacket when modify
+	FSNETCMD_GETDAMAGE,              //  22 Svr<->Cli
+	FSNETCMD_GNDTURRETSTATE,         //  23 Svr<->Cli
+	FSNETCMD_SETTESTAUTOPILOT,       //  24 Svr ->Cli
+	FSNETCMD_REQTOBESIDEWINDOWOFSVR, //  25 Svr<- Cli
+	FSNETCMD_ASSIGNSIDEWINDOW,       //  26 Svr ->Cli
+	FSNETCMD_RESENDAIRREQUEST,       //  27 Svr<- Cli
+	FSNETCMD_RESENDGNDREQUEST,       //  28 Svr<- Cli
+	FSNETCMD_VERSIONNOTIFY,          //  29 Svr ->Cli
+	FSNETCMD_AIRCMD,                 //  30 Svr<->Cli   // After 2001/06/24
+	FSNETCMD_USEMISSILE,             //  31 Svr ->Cli   // After 2001/06/24
+	FSNETCMD_TEXTMESSAGE,            //  32 Svr<->Cli
+	FSNETCMD_ENVIRONMENT,            //  33 Svr<->Cli  (*1)
+	FSNETCMD_NEEDRESENDJOINAPPROVAL, //  34 Svr<- Cli
+	FSNETCMD_REVIVEGROUND,           //  35 Svr ->Cli   // After 2004
+	FSNETCMD_WEAPONCONFIG,           //  36 Svr<->Cli   // After 20040618
+	FSNETCMD_LISTUSER,               //  37 Svr<->Cli   // After 20040726
+	FSNETCMD_QUERYAIRSTATE,          //  38 Cli ->Svr   // After 20050207
+	FSNETCMD_USEUNGUIDEDWEAPON,      //  39 Svr ->Cli   // After 20050323
+	FSNETCMD_AIRTURRETSTATE,         //  40 Svr<->Cli   // After 20050701
+	FSNETCMD_CTRLSHOWUSERNAME,       //  41 Svr ->Cli   // After 20050914
+	FSNETCMD_CONFIRMEXISTENCE,       //  42 Not Used
+	FSNETCMD_CONFIGSTRING,           //  43 Svr ->Cli   // After 20060514    Cli->Svr for read back
+	FSNETCMD_LIST,                   //  44 Svr ->Cli   // After 20060514    Cli->Svr for read back
+	FSNETCMD_GNDCMD,                 //  45 Svr<->Cli
+	FSNETCMD_REPORTSCORE,            //  46 Svr -> Cli  // After 20100630    (Older version will ignore)
+	FSNETCMD_RESERVED16,             //  47 Svr -> Cli
+	FSNETCMD_RESERVED17,             //  48
+	FSNETCMD_RESERVED18,             //  49
+	FSNETCMD_RESERVED19,             //  50
+	FSNETCMD_RESERVED20,             //  51
+	FSNETCMD_RESERVED21,             //  52
+	FSNETCMD_RESERVED22,             //  53
+	FSNETCMD_RESERVED23,             //  54
+	FSNETCMD_RESERVED24,             //  55
+	FSNETCMD_RESERVED25,             //  56
+	FSNETCMD_RESERVED26,             //  57
+	FSNETCMD_RESERVED27,             //  58
+	FSNETCMD_RESERVED28,             //  59
+	FSNETCMD_RESERVED29,             //  60
+	FSNETCMD_RESERVED30,             //  61
+	FSNETCMD_RESERVED31,             //  62
+	FSNETCMD_RESERVED32,             //  63
+	FSNETCMD_RESERVED33,             //  64
+	FSNETCMD_RESERVED34,             //  65
+	FSNETCMD_RESERVED35,             //  66
+	FSNETCMD_RESERVED36,             //  67
+	FSNETCMD_RESERVED37,             //  68
+	FSNETCMD_RESERVED38,             //  69
+	FSNETCMD_RESERVED39,             //  70
+	FSNETCMD_RESERVED40,             //  71
+	FSNETCMD_RESERVED41,             //  72
+	FSNETCMD_RESERVED42,             //  73
+	FSNETCMD_RESERVED43,             //  74
+	FSNETCMD_RESERVED44,             //  75
+	FSNETCMD_RESERVED45,             //  76
+	FSNETCMD_RESERVED46,             //  77
+	FSNETCMD_RESERVED47,             //  78
+	FSNETCMD_RESERVED48,             //  79
+	FSNETCMD_RESERVED49,             //  80
+	FSNETCMD_NOP
+};
+
+
+
+
+
+FSNETCMD_AIRPLANESTATE
+
+4 bytes   int     FSNETCMD_AIRPLANESTATE
+4 bytes   float   Time stamp
+4 bytes   int     Aircraft identification number
+2 bytes   short   Version
+  Version:  0,1,2  Not used any more
+            3      Normal format
+            4      Short format with nozzle position and bomb-bay door
+            5      Short format without nozzle position and bomb-bay door
+
+(In short format)
+4 bytes   float   X
+4 bytes   float   Y
+4 bytes   float   Z
+2 bytes   short   Heading angle
+2 bytes   short   Pitch angle
+2 bytes   short   Bank angle
+2 bytes   short   VX
+2 bytes   short   VY
+2 bytes   short   VZ
+2 bytes   short   VP
+2 bytes   short   VH
+2 bytes   short   VB
+
+2 bytes   short   Smoke oil
+4 bytes   int     Fuel
+2 bytes   short   Payload
+
+1 byte    uchar   Flight state
+1 byte    uchar   Variable geometry wing position
+
+1 byte    uchar   Air brake
+1 byte    uchar   Flap
+
+2 bytes   short   Flags
+
+2 bytes   short   Gun
+2 bytes   short   Rocket
+
+1 byte    uchar   AAM
+1 byte    uchar   AGM
+1 byte    uchar   500Bomb
+1 byte    uchar   Damage tolerance
+
+1 byte    char    Load factor
+
+1 byte    uchar   Throttle
+1 byte    char    Elevator
+1 byte    char    Aileron
+1 byte    char    Rudder
+1 byte    char    Elevator trim
+
+1 byte    uchar   Nozzle direction
+1 byte    uchar   Bomb bay door
+
+
+(Long format)
+2 bytes   short   0 (Not used any more)
+4 bytes   float   X
+4 bytes   float   Y
+4 bytes   float   Z
+2 bytes   short   Heading angle
+2 bytes   short   Pitch angle
+2 bytes   short   Bank angle
+2 bytes   short   VX
+2 bytes   short   VY
+2 bytes   short   VZ
+2 bytes   short   VP (Redandant)
+2 bytes   short   VH (Redandant)
+2 bytes   short   VB (Redandant)
+2 bytes   short   Load factor
+2 bytes   short   GUN
+2 bytes   short   AAM
+2 bytes   short   AGM
+2 bytes   short   500Bomb(ptr,(short)bom);
+2 bytes   short   Smoke oil(ptr,(short)GetSmokeOil());
+4 bytes   float   Fuel
+4 bytes   float   Payload
+2 bytes   short   Damage tolerance
+1 byte    uchar   State
+1 byte    uchar   Variable geometry wing position
+1 byte    uchar   Air brake
+1 byte    uchar   Landing gear
+1 byte    uchar   Flap
+1 byte    uchar   Brake
+2 bytes   short   Flags;
+1 byte    uchar   Throttle
+1 byte    char    Elevator
+1 byte    char    Aileron
+1 byte    char    Rudder
+1 byte    char    Elevator trim
+2 bytes   short   Rocket
+4 bytes   float   VP
+4 bytes   float   VH
+4 bytes   float   VB
+1 byte    uchar   Nozzle position
+1 byte    uchar   Thrust reverser
+1 byte    uchar   Bomb bay door
+
+
